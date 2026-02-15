@@ -13,6 +13,7 @@ import { parseCommandText, parseModelArgs, parseRunArgs, type ParsedCommand } fr
 import { isPathWithinRoot, loadConfig, resolveDefaultProviderModel } from "./config.js";
 import { buildSessionKey, normalizeGuildId, resolveBinding } from "./router.js";
 import { listModelsForProvider, providerSupportsReasoning, runCli } from "./runner/cli-runner.js";
+import { ProcessManager } from "./runner/process-manager.js";
 import { ApprovalStore } from "./storage/approval-store.js";
 import { SessionStore } from "./storage/session-store.js";
 import type { ProviderId, ReasoningEffort, ResolvedConfig, SessionState } from "./types.js";
@@ -395,12 +396,16 @@ export class DiscordCliBridge {
   private readonly sessionStore: SessionStore;
   private readonly approvalStore: ApprovalStore;
   private readonly client: Client;
+  private readonly processManager: ProcessManager;
   private readonly expireTimer: NodeJS.Timeout;
+  private stopPromise: Promise<void> | null = null;
+  private stopping = false;
 
   constructor(configPath?: string) {
     this.config = loadConfig(configPath);
     this.sessionStore = new SessionStore(this.config.stateDir);
     this.approvalStore = new ApprovalStore(this.config.stateDir);
+    this.processManager = new ProcessManager();
     this.client = new Client({
       intents: [
         GatewayIntentBits.Guilds,
@@ -434,8 +439,17 @@ export class DiscordCliBridge {
   }
 
   async stop(): Promise<void> {
-    clearInterval(this.expireTimer);
-    await this.client.destroy();
+    if (this.stopPromise) {
+      return this.stopPromise;
+    }
+
+    this.stopping = true;
+    this.stopPromise = (async () => {
+      clearInterval(this.expireTimer);
+      await this.processManager.shutdownAll(3_000);
+      this.client.destroy();
+    })();
+    return this.stopPromise;
   }
 
   private async registerSlashCommands(): Promise<void> {
@@ -506,6 +520,10 @@ export class DiscordCliBridge {
       return true;
     }
     return isPathWithinRoot(workspacePath, this.config.workspaceRoot);
+  }
+
+  private isStopping(): boolean {
+    return this.stopping || this.processManager.isShuttingDown;
   }
 
   private resolveShortcuts(parsed: ParsedCommand): ParsedCommand {
@@ -618,6 +636,11 @@ export class DiscordCliBridge {
     completeTitle: string;
     failTitle: string;
   }): Promise<void> {
+    if (this.isStopping()) {
+      await params.context.reply("Server is shutting down. Try again shortly.");
+      return;
+    }
+
     await params.context.reply(params.startText);
 
     try {
@@ -634,6 +657,7 @@ export class DiscordCliBridge {
         timeoutMs: this.config.defaults.runTimeoutMs,
         reasoningEffort: params.reasoningEffort,
         resumeSessionId: (await this.sessionStore.get(params.sessionKey))?.cliSessionIds?.[params.provider],
+        processManager: this.processManager,
       });
 
       await this.sessionStore.setRunResult({
@@ -788,6 +812,10 @@ export class DiscordCliBridge {
         return;
       }
       case "run": {
+        if (this.isStopping()) {
+          await context.reply("Server is shutting down. Try again shortly.");
+          return;
+        }
         const runArgs = parseRunArgs(parsed.args);
         if (runArgs.error) {
           await context.reply(`Usage: /run [--provider codex|claude] <prompt>\n${runArgs.error}`);

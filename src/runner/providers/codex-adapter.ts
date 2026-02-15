@@ -78,6 +78,7 @@ export class CodexAdapter implements ProviderAdapter {
       args,
       workspacePath: params.workspacePath,
       timeoutMs: params.timeoutMs,
+      processManager: params.processManager,
     });
 
     const parsed = parseCliOutput({

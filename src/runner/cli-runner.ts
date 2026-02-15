@@ -1,4 +1,5 @@
 import type { CliRunResult, ProviderId, ReasoningEffort } from "../types.js";
+import type { ProcessManager } from "./process-manager.js";
 import { getProviderAdapter } from "./providers/registry.js";
 
 export async function runCli(params: {
@@ -9,6 +10,7 @@ export async function runCli(params: {
   timeoutMs: number;
   resumeSessionId?: string;
   reasoningEffort?: ReasoningEffort;
+  processManager?: ProcessManager;
 }): Promise<CliRunResult> {
   const adapter = getProviderAdapter(params.provider);
   return adapter.run({
@@ -18,6 +20,7 @@ export async function runCli(params: {
     timeoutMs: params.timeoutMs,
     resumeSessionId: params.resumeSessionId,
     reasoningEffort: params.reasoningEffort,
+    processManager: params.processManager,
   });
 }
 

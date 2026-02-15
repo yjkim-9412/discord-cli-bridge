@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import fs from "node:fs";
+import type { ProcessManager } from "../process-manager.js";
 import type { CliRunResult, ProviderId, ReasoningEffort } from "../../types.js";
 
 export type ProviderRunRequest = {
@@ -9,6 +10,7 @@ export type ProviderRunRequest = {
   timeoutMs: number;
   resumeSessionId?: string;
   reasoningEffort?: ReasoningEffort;
+  processManager?: ProcessManager;
 };
 
 export interface ProviderAdapter {
@@ -30,6 +32,7 @@ export async function executeCliCommand(params: {
   args: string[];
   workspacePath: string;
   timeoutMs: number;
+  processManager?: ProcessManager;
 }): Promise<{ stdout: string; stderr: string; durationMs: number }> {
   const startedAt = Date.now();
   const child = spawn(params.command, params.args, {
@@ -37,6 +40,7 @@ export async function executeCliCommand(params: {
     env: process.env,
     stdio: ["ignore", "pipe", "pipe"],
   });
+  params.processManager?.track(child);
 
   let stdout = "";
   let stderr = "";
