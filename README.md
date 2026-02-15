@@ -4,6 +4,10 @@
 
 [English](README.md) | [한국어](README.ko.md)
 
+## Motivation
+
+Inspired by workflows that use iMessage to remotely trigger Claude Code or Codex on a Mac. Since this project targets a **Windows + WSL** environment where iMessage isn't available, Discord serves as the cross-platform bridge to achieve the same remote-control experience for CLI coding agents.
+
 ## Features
 
 - **Three input modes** — Slash commands (`/run`), text commands (`!run`), and mentions (`@bot prompt`)

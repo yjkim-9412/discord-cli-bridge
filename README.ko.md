@@ -4,6 +4,10 @@
 
 [English](README.md) | [한국어](README.ko.md)
 
+## 만든 계기
+
+iMessage를 통해 Mac의 Claude Code나 Codex를 원격 실행하는 워크플로우에서 영감을 받았습니다. 이 프로젝트는 iMessage를 사용할 수 없는 **Windows + WSL** 환경을 타겟으로 하며, Discord를 크로스 플랫폼 브리지로 활용해 동일한 원격 코딩 에이전트 제어 경험을 구현합니다.
+
 ## 주요 특징
 
 - **3가지 입력 방식** — 슬래시(`/run`), 텍스트(`!run`), 멘션(`@bot 프롬프트`) 모두 지원
