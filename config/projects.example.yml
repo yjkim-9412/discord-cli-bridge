@@ -1,0 +1,39 @@
+owner:
+  discordUserId: "123456789012345678"
+
+# Optional env safety boundary:
+# export BRIDGE_WORKSPACE_ROOT="/path/to/your/workspaces"
+
+defaults:
+  provider: codex
+  model: default
+  models:
+    codex:
+      - gpt-5.3-codex
+      - default
+    claude:
+      - default
+  approvalTtlSec: 600
+  runTimeoutMs: 600000
+
+# optional shortcuts (input alias -> command)
+# shortcuts:
+#   s: status
+#   상태: status
+#   m: model
+#   cs: status
+
+# optional
+# discord:
+#   botToken: "<token>"
+
+projects:
+  - alias: my-studio
+    path: /path/to/your/workspaces/my-studio
+    provider: codex
+    model: default
+
+bindings:
+  - guildId: "111111111111111111"
+    channelId: "222222222222222222"
+    project: my-studio
