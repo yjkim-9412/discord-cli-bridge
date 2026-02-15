@@ -36,7 +36,13 @@ pnpm install
 # Create config from template
 cp config/projects.example.yml config/projects.yml
 
-# Set environment variables
+# Set environment variables (choose one method)
+
+# Option A: .env file (recommended)
+cp .env.example .env
+# Edit .env with your values
+
+# Option B: shell export
 export DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
 export BRIDGE_WORKSPACE_ROOT="/path/to/your/workspaces"  # optional, restricts execution scope
 ```

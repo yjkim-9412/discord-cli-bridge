@@ -36,7 +36,13 @@ pnpm install
 # 설정 파일 생성
 cp config/projects.example.yml config/projects.yml
 
-# 환경변수 설정
+# 환경변수 설정 (둘 중 하나 선택)
+
+# 방법 A: .env 파일 (권장)
+cp .env.example .env
+# .env 파일을 편집하여 값 입력
+
+# 방법 B: 쉘 export
 export DISCORD_BOT_TOKEN="YOUR_DISCORD_BOT_TOKEN"
 export BRIDGE_WORKSPACE_ROOT="/path/to/your/workspaces"  # 선택, 실행 경로 제한
 ```

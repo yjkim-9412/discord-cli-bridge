@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { DiscordCliBridge } from "./discord-bot.js";
 
 async function main() {
