@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Setup Guide
+    url: https://github.com/yjkim-9412/discord-cli-bridge/blob/main/README.md
+    about: Read the README first for setup and troubleshooting.
+  - name: Security
+    url: https://github.com/yjkim-9412/discord-cli-bridge/security/advisories/new
+    about: Report security vulnerabilities privately.
