@@ -174,6 +174,10 @@ Key components:
 
 - Use exact model names (e.g., `gpt-5.3-codex`)
 
+## Terms of Service
+
+By using this software, you agree to the [Terms of Service](TERMS_OF_SERVICE.md). The software executes CLI tools on your local machine — please review the security disclosure before use.
+
 ## License
 
 MIT
