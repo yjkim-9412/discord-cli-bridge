@@ -103,6 +103,7 @@ Successful startup logs: `Bridge online as ...` and `Registered ... slash comman
 | `/provider <codex\|claude>` | Switch provider | `/provider claude` |
 | `/model <model>` | Set model | `!model gpt-5.3-codex --reasoning xhigh` |
 | `/new` | Reset current provider session | |
+| `/exit` | End channel session (clear all stored provider sessions) | |
 | `/approve <id>` | Approve a pending request | |
 | `/deny <id>` | Deny a pending request | |
 

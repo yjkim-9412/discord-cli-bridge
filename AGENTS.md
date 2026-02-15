@@ -33,8 +33,8 @@
 
 ## Command Behavior (Current)
 
-- Text commands: `!help`, `!status`, `!models`, `!run ...`, `!provider ...`, `!model ...`, `!new` 등
-- Slash commands: `/help`, `/status`, `/models`, `/run`, `/provider`, `/model`, `/new` 등
+- Text commands: `!help`, `!status`, `!models`, `!run ...`, `!provider ...`, `!model ...`, `!new`, `!exit` 등
+- Slash commands: `/help`, `/status`, `/models`, `/run`, `/provider`, `/model`, `/new`, `/exit` 등
 - Mention run: `@homeclaw <prompt>`
 - Mention shortcut aliases: `@homeclaw status`, `@homeclaw codex status`, `@homeclaw 상태`, `@homeclaw models`, `@homeclaw reasoning`, `@homeclaw 추론`
 - Owner run: 승인 없이 즉시 실행
@@ -50,6 +50,7 @@
 - Reasoning levels(codex): `low`, `medium`, `high`, `xhigh`
 - Claude는 reasoning 값을 세션에 저장할 수 있지만 실행 시 무시
 - `/new`는 **현재 session.provider의 세션 ID만** 초기화
+- `/exit`는 **해당 채널 세션의 저장된 provider 세션을 전체 종료**
 
 ## Workspace / Mapping Rules
 

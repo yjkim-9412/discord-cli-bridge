@@ -33,6 +33,7 @@ const HELP_TEXT = [
   "- /model <model> [--reasoning low|medium|high|xhigh] (owner)",
   "- /models or !models",
   "- /new or !new (owner)",
+  "- /exit or !exit (owner)",
   "- @bot <text> (treated as run prompt)",
 ].join("\n");
 
@@ -138,6 +139,10 @@ const SLASH_COMMANDS: ApplicationCommandDataResolvable[] = [
   {
     name: "new",
     description: "Reset stored CLI session IDs",
+  },
+  {
+    name: "exit",
+    description: "End this channel session and clear stored provider session IDs",
   },
 ];
 
@@ -772,6 +777,14 @@ export class DiscordCliBridge {
         await context.reply(
           "Session reset for " + session.provider + ": next " + session.provider + " run will start a new session.",
         );
+        return;
+      }
+      case "exit": {
+        if (!(await requireOwner(this.config, context.userId, context.reply))) {
+          return;
+        }
+        await this.sessionStore.reset(session.sessionKey);
+        await context.reply("Session ended: cleared stored provider sessions for this channel.");
         return;
       }
       case "run": {
