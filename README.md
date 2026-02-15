@@ -1,6 +1,8 @@
 # discord-cli-bridge
 
 > Bridge Discord channels to local CLI coding agents (`codex` / `claude`) running on your PC via WSL.
+>
+> **This project is under active development and may be unstable.** APIs, commands, and configuration formats are subject to change without notice.
 
 [English](README.md) | [한국어](README.ko.md)
 

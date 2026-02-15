@@ -1,6 +1,8 @@
 # discord-cli-bridge
 
 > 디스코드 채널에서 `codex`/`claude` CLI를 WSL 로컬 프로젝트와 연결해 실행하는 브리지
+>
+> **이 프로젝트는 활발히 개발 중이며 안정성이 보장되지 않습니다.** API, 명령어, 설정 형식이 예고 없이 변경될 수 있습니다.
 
 [English](README.md) | [한국어](README.ko.md)
 
