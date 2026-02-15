@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+config/projects.yml
+state/*.json
+*.log
+approvals.json
+sessions.json
+.claude/settings.local.json
